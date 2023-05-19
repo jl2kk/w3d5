@@ -10,20 +10,27 @@ class PolyTreeNode
 
 
     def parent=(new_node)
-        if self.parent == nil
-            new_node = parent
-        end 
+         if @parent
+            @parent.children.delete(self)
+        end
 
-        if self.parent != nil
-            self.children << new_node 
-        end 
-
-
-        # new_node.children.push(new_node.children.children)
-
-
-
+        @parent = new_node
+        
+        if @parent != nil
+            new_node.children << self
+        end   
     end 
+
+    def add_child(child)
+        child.parent = self 
+    end
+
+    def remove_child(child)
+        if child.parent != self
+         raise 
+        end
+        child.parent = nil
+    end
 
 
 
