@@ -1,4 +1,39 @@
+module Searchable 
+
+    def dfs(target)
+        if self.value == target 
+            return self
+        end   
+        self.children.each do |child|
+            res = child.dfs(target)
+            if res != nil
+                return res 
+            end 
+        end 
+        return nil
+    end 
+
+
+    def bfs(target)
+        queue = []
+        queue << self
+        until queue.empty?
+            node = queue.pop
+            if node == target
+                return node 
+            else 
+                self.children.each do |child|
+                    queue << child.value
+                end  
+            end
+            return nil 
+        end 
+    end 
+
+end 
+
 class PolyTreeNode
+    include Searchable
 
     def initialize(value)
         @parent = nil 
@@ -32,7 +67,8 @@ class PolyTreeNode
         child.parent = nil
     end
 
-
-
-
 end
+
+
+
+
