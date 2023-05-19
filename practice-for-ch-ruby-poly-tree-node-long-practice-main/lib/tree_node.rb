@@ -1,3 +1,4 @@
+require "byebug"
 module Searchable 
 
     def dfs(target)
@@ -18,16 +19,17 @@ module Searchable
         queue = []
         queue << self
         until queue.empty?
-            node = queue.pop
-            if node == target
-                return node 
-            else 
-                self.children.each do |child|
-                    queue << child.value
-                end  
+            # debugger
+            node = queue.shift
+            if node.value == target
+                return node
             end
-            return nil 
-        end 
+        
+            node.children.each do |child|
+                queue << child
+            end
+        end
+        return nil 
     end 
 
 end 
