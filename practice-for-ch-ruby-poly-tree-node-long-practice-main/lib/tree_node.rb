@@ -69,46 +69,66 @@ class PolyTreeNode
 end
 
 class KnightPathFinder 
+    attr_reader :considered_positions
 
     def initialize(position=[0,0])
         @position = position
         @root_node = PolyTreeNode.new(position)
         @considered_positions = [position]
-
     end 
-
 
     def find_path()
 
     end 
 
-    def new_move_positions()
-
-
-    end 
+    def new_move_positions(pos)
+        availabe_moves = []
+        moves = KnightPathFinder.valid_moves(pos)
+        moves.each do |i|
+            if @considered_positions.include?(i)
+                next 
+            else 
+                availabe_moves << i 
+                @considered_positions << i 
+            end 
+        end 
+        availabe_moves
+    end  
 
     def build_move_tree()
-        queue = []
-        queue << root_node
-        until queue.empty?
-            node 
-
-
+        queue1 = []
+        queue1 << @root_node
+        until queue1.empty?
+            parent_node = queue1.shift
+         
+            new_nodes = new_move_positions(parent_node.value)
+            new_nodes.each do |i|
+                new_node = PolyTreeNode.new(i)
+                queue1 << new_node 
+                parent_node.add_child(new_node)
+            end 
+        end
+        @root_node
     end
 
+
     def self.valid_moves(pos)
-        all_moves []
-        row, col = pos 
-        all_moves << up_left = pos[row-2][col-1]
-        all_moves << up_right = pos[row-2][col+1]
-        all_moves << left_up = pos[row-1][col-2]
-        all_moves << left_down = pos[row+1][col-2]
-        all_moves << right_up = pos[row-1][col+2]
-        all_moves << right_down = pos[row+1][col+2]
-        all_moves << down_left = pos[row+2][col-1]
-        all_moves << down_right = pos[row+2][col+1]
-        all_moves.select {|row,col| (row > 0 && row < 7) && (col > 0 && col < 7)} 
+        all_moves = []
+        row, col = pos
+        all_moves << up_left = [row-2, col-1]
+        all_moves << up_right =[row-2,col+1]
+        all_moves << left_up = [row-1,col-2]
+        all_moves << left_down = [row+1,col-2]
+        all_moves << right_up = [row-1,col+2]
+        all_moves << right_down = [row+1,col+2]
+        all_moves << down_left = [row+2,col-1]
+        all_moves << down_right= [row+2,col+1]
+        all_moves.select {|row,col| (row >= 0 && row <= 7) && (col >= 0 && col <= 7)} 
+
     end 
+end
 
-
+k = KnightPathFinder.new([0,1])
+k.build_move_tree
+p k.considered_positions.length
 
