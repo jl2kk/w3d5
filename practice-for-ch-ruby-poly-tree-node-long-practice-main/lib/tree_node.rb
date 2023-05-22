@@ -69,6 +69,8 @@ class PolyTreeNode
 end
 
 class KnightPathFinder 
+ include Searchable
+
     attr_reader :considered_positions
 
     def initialize(position=[0,0])
@@ -77,8 +79,30 @@ class KnightPathFinder
         @considered_positions = [position]
     end 
 
-    def find_path()
+    def find_path(target)
+        
+        queue = [@root_node]
+        until queue.empty?
+            node = queue.shift
+            if node.value == target
+               return trace_path_back(node)
+            end
+        
+            node.children.each do |child|
+                queue << child
+            end
+        end
+    end 
 
+    def trace_path_back(end_node)
+        
+        path = []
+        until end_node == @root_node
+            path << end_node.value
+            end_node = end_node.parent
+        end
+       
+        return path.reverse  
     end 
 
     def new_move_positions(pos)
@@ -131,4 +155,6 @@ end
 k = KnightPathFinder.new([0,1])
 k.build_move_tree
 p k.considered_positions.length
+
+p k.find_path([4,4])
 
