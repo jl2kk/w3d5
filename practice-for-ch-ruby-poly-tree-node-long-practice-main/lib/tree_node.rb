@@ -45,19 +45,16 @@ class PolyTreeNode
 
     attr_reader :parent, :children, :value 
 
-
     def parent=(new_node)
          if @parent
             @parent.children.delete(self)
         end
-
         @parent = new_node
         
         if @parent != nil
             new_node.children << self
         end   
     end 
-
     def add_child(child)
         child.parent = self 
     end
@@ -71,6 +68,47 @@ class PolyTreeNode
 
 end
 
+class KnightPathFinder 
+
+    def initialize(position=[0,0])
+        @position = position
+        @root_node = PolyTreeNode.new(position)
+        @considered_positions = [position]
+
+    end 
+
+
+    def find_path()
+
+    end 
+
+    def new_move_positions()
+
+
+    end 
+
+    def build_move_tree()
+        queue = []
+        queue << root_node
+        until queue.empty?
+            node 
+
+
+    end
+
+    def self.valid_moves(pos)
+        all_moves []
+        row, col = pos 
+        all_moves << up_left = pos[row-2][col-1]
+        all_moves << up_right = pos[row-2][col+1]
+        all_moves << left_up = pos[row-1][col-2]
+        all_moves << left_down = pos[row+1][col-2]
+        all_moves << right_up = pos[row-1][col+2]
+        all_moves << right_down = pos[row+1][col+2]
+        all_moves << down_left = pos[row+2][col-1]
+        all_moves << down_right = pos[row+2][col+1]
+        all_moves.select {|row,col| (row > 0 && row < 7) && (col > 0 && col < 7)} 
+    end 
 
 
 
